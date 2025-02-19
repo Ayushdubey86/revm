@@ -1,22 +1,20 @@
-use crate::{InspectorEvmTrait, InspectorFrameTrait};
+use crate::{InspectorEvmTr, InspectorFrame};
 use auto_impl::auto_impl;
-use revm::{
-    context::{Cfg, JournalEntry, JournaledState},
-    context_interface::{result::ResultAndState, ContextTrait, Database, Transaction},
-    handler::{
-        execution, EthHandler, EvmTrait, Frame, FrameInitOrResult, FrameOrResult, FrameResult,
-        ItemOrResult,
-    },
-    interpreter::{
-        interpreter::EthInterpreter,
-        interpreter_types::{Jumps, LoopControl},
-        table::InstructionTable,
-        CallInputs, CallOutcome, CreateInputs, CreateOutcome, EOFCreateInputs, FrameInput, Host,
-        InitialAndFloorGas, InstructionResult, Interpreter, InterpreterAction, InterpreterTypes,
-    },
-    primitives::{Address, Log, U256},
-    state::EvmState,
+use context::{
+    result::ResultAndState, Cfg, ContextTr, Database, JournalEntry, JournaledState, Transaction,
 };
+use handler::{
+    execution, EvmTr, Frame, FrameInitOrResult, FrameOrResult, FrameResult, Handler, ItemOrResult,
+};
+use interpreter::{
+    interpreter::EthInterpreter,
+    interpreter_types::{Jumps, LoopControl},
+    table::InstructionTable,
+    CallInputs, CallOutcome, CreateInputs, CreateOutcome, EOFCreateInputs, FrameInput, Host,
+    InitialAndFloorGas, InstructionResult, Interpreter, InterpreterAction, InterpreterTypes,
+};
+use primitives::{Address, Log, U256};
+use state::EvmState;
 use std::{vec, vec::Vec};
 
 /// EVM [Interpreter] callbacks.
@@ -181,12 +179,11 @@ impl<DB: Database> JournalExt for JournaledState<DB> {
     }
 }
 
-pub trait EthInspectorHandler: EthHandler
+pub trait InspectorHandler: Handler
 where
-    Self::Evm: InspectorEvmTrait<
-        Inspector: Inspector<<<Self as EthHandler>::Evm as EvmTrait>::Context, Self::IT>,
-    >,
-    Self::Frame: InspectorFrameTrait<IT = Self::IT>,
+    Self::Evm:
+        InspectorEvmTr<Inspector: Inspector<<<Self as Handler>::Evm as EvmTr>::Context, Self::IT>>,
+    Self::Frame: InspectorFrame<IT = Self::IT>,
 {
     type IT: InterpreterTypes;
 
@@ -278,7 +275,7 @@ where
                     if let Some(output) = frame_start(context, inspector, &mut init) {
                         output
                     } else {
-                        match self.frame_init(frame, evm, init)? {
+                        match self.frame_init(frame, evm, init.clone())? {
                             ItemOrResult::Item(mut new_frame) => {
                                 // only if new frame is created call initialize_interp hook.
                                 let (context, inspector) = evm.ctx_inspector();
@@ -289,7 +286,7 @@ where
                             // Dont pop the frame as new frame was not created.
                             ItemOrResult::Result(mut result) => {
                                 let (context, inspector) = evm.ctx_inspector();
-                                frame_end(context, inspector, frame.frame_input(), &mut result);
+                                frame_end(context, inspector, &init, &mut result);
                                 result
                             }
                         }
@@ -374,7 +371,7 @@ pub fn inspect_instructions<CTX, IT>(
     instructions: &InstructionTable<IT, CTX>,
 ) -> InterpreterAction
 where
-    CTX: ContextTrait<Journal: JournalExt> + Host,
+    CTX: ContextTr<Journal: JournalExt> + Host,
     IT: InterpreterTypes,
 {
     interpreter.reset_control();

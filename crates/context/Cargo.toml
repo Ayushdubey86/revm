@@ -1,7 +1,7 @@
 [package]
 name = "revm-context"
 description = "Revm context crates"
-version = "1.0.0"
+version = "1.0.0-alpha.1"
 authors.workspace = true
 edition.workspace = true
 keywords.workspace = true
@@ -41,10 +41,7 @@ derive-where.workspace = true
 cfg-if.workspace = true
 
 # Optional
-serde = { version = "1.0", default-features = false, features = [
-    "derive",
-    "rc",
-], optional = true }
+serde = { workspace = true, features = ["derive", "rc"], optional = true }
 
 [dev-dependencies]
 database.workspace = true

@@ -1,7 +1,7 @@
 [package]
 name = "revm-specification"
 description = "Ethereum hardforks and EIP specification structs and constants"
-version = "1.0.0"
+version = "1.0.0-alpha.1"
 authors.workspace = true
 edition.workspace = true
 keywords.workspace = true
@@ -26,14 +26,10 @@ all = "warn"
 primitives.workspace = true
 
 # misc
-enumn = { version = "0.1" }
+enumn.workspace = true
 
 # Optional
-serde = { version = "1.0", default-features = false, features = [
-    "derive",
-    "rc",
-], optional = true }
-
+serde = { workspace = true, features = ["derive", "rc"], optional = true }
 
 [dev-dependencies]
 

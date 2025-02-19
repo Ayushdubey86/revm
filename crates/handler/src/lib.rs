@@ -7,6 +7,7 @@ extern crate alloc as std;
 
 // Mainnet related handlers.
 
+pub mod evm;
 pub mod execution;
 mod frame;
 mod frame_data;
@@ -20,9 +21,10 @@ mod precompile_provider;
 pub mod validation;
 
 // Public exports
-pub use frame::{return_create, return_eofcreate, CtxTraitDbError, EthFrame, Frame};
+pub use evm::{ExecuteCommitEvm, ExecuteEvm};
+pub use frame::{return_create, return_eofcreate, ContextTrDbError, EthFrame, Frame};
 pub use frame_data::{FrameData, FrameResult};
-pub use handler::{EthHandler, EthTraitError, EvmTrait};
+pub use handler::{EvmTr, EvmTrError, Handler};
 pub use item_or_result::{FrameInitOrResult, FrameOrResult, ItemOrResult};
 pub use mainnet_handler::MainnetHandler;
 pub use precompile_provider::{EthPrecompiles, PrecompileProvider};
