@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [21.1.0](https://github.com/Ayushdubey86/revm/compare/revm-interpreter-v21.0.0...revm-interpreter-v21.1.0) - 2025-06-09
+
+### Added
+
+- added instruction_result fn in LoopControl trait  ([#2595](https://github.com/Ayushdubey86/revm/pull/2595))
+
 ## [21.0.0](https://github.com/bluealloy/revm/compare/revm-interpreter-v20.0.0...revm-interpreter-v21.0.0) - 2025-06-06
 
 ### Added
