@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [26.0.0](https://github.com/Ayushdubey86/revm/compare/revm-v25.0.0...revm-v26.0.0) - 2025-06-09
+
+### Added
+
+- enable P256 in Osaka ([#2601](https://github.com/Ayushdubey86/revm/pull/2601))
+
 ## [25.0.0](https://github.com/bluealloy/revm/compare/revm-v24.0.1...revm-v25.0.0) - 2025-06-06
 
 ### Added

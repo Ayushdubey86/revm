@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [7.0.0](https://github.com/Ayushdubey86/revm/compare/revm-context-interface-v6.0.0...revm-context-interface-v7.0.0) - 2025-06-09
+
+### Added
+
+- add optional priority fee check configuration ([#2588](https://github.com/Ayushdubey86/revm/pull/2588))
+
 ## [6.0.0](https://github.com/bluealloy/revm/compare/revm-context-interface-v5.0.0...revm-context-interface-v6.0.0) - 2025-06-06
 
 ### Added
